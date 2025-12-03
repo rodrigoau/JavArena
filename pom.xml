@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>JavArena</name>
-    <description>Learning project for Java: OOP, Data Structures, Algorithms, and Logic</description>
+    <description>Learning project for Java: OOP, Data Structures, Algorithms, and Logic.</description>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
