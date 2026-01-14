@@ -7,7 +7,7 @@ public class JavaCollections {
 
     public static void main(String[] args) {
 
-        /**
+        /*
          * ------------------------------------------------------------------------------------------------------------------
          * RESUMEN DE JAVA COLLECTIONS
          * ------------------------------------------------------------------------------------------------------------------
@@ -38,6 +38,7 @@ public class JavaCollections {
         names.add("sky");
         names.add("snow");
         names.add("flower");
+        names.add("sand");
 
         System.out.println(names);
         System.out.println(names.get(1));
