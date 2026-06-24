@@ -1,4 +1,4 @@
-package com.rodrigo.oop;
+package com.rodrigo.oop.workspace1;
 
 public class Dog extends Animal{
     @Override
