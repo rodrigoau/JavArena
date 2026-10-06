@@ -1,4 +1,4 @@
-package com.rodrigo.datastructures;
+package com.rodrigo.core.datastructures;
 
 public class Arrays {
     public static void main(String[] args) {

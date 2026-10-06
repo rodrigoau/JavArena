@@ -1,4 +1,4 @@
-package com.rodrigo.logic;
+package com.rodrigo.core.logic;
 
 public class EntryPoint {
     public static void main(String[] args) {

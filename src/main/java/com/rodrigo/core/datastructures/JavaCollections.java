@@ -1,7 +1,9 @@
-package com.rodrigo.datastructures;
+package com.rodrigo.core.datastructures;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class JavaCollections {
 
@@ -20,7 +22,6 @@ public class JavaCollections {
          *
          * | TIPO      | INTERFAZ | IMPLEMENTACIÓN | CARACTERÍSTICA PRINCIPAL              | EJEMPLO REAL                   |
          * |-----------|----------|----------------|---------------------------------------|--------------------------------|
-         * | ...       | ...      | ...            | ...                                   | ...                            |
          * | Conjunto  | Set      | TreeSet        | Ordenado (A-Z, 0-9), único.           | Lista de asistencia alfabética.|
          * | Conjunto  | Set      | LinkedHashSet  | Orden de llegada, único.              | Historial de acciones (undo).  |
          */
@@ -43,6 +44,13 @@ public class JavaCollections {
         System.out.println(names);
         System.out.println(names.get(1));
 
+        Set<String> students = new TreeSet<>();
+        students.add("ana");
+        students.add("jack");
+        students.add("scott");
+        students.add("ana");
+
+        System.out.println("Los estudiantes son: " + students);
 
     }
 

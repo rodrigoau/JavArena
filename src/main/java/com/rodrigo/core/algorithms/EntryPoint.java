@@ -1,4 +1,4 @@
-package com.rodrigo.algorithms;
+package com.rodrigo.core.algorithms;
 
 public class EntryPoint {
     public static void main(String[] args) {
