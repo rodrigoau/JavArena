@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="JavArena Web Automation Suite">
+
+    <!-- Parámetro global opcional para el navegador (chrome, firefox, edge) -->
+    <parameter name="browser" value="chrome"/>
+
+    <test name="Web Tests">
+        <classes>
+            <!-- Aquí agregas la ruta completa de tus clases de prueba -->
+            <class name="com.rodrigo.tests.web.KlaudersTest"/>
+        </classes>
+    </test>
+
+</suite>
