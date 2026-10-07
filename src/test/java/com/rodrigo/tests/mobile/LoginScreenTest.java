@@ -4,6 +4,7 @@ import com.rodrigo.automation.mobile.screens.HomeScreen;
 import com.rodrigo.automation.mobile.screens.LoginScreen;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -24,5 +25,6 @@ public class LoginScreenTest extends BaseMobileTest {
     public void loginUsingExistingCredentials() throws InterruptedException {
         LoginScreen loginScreen = new LoginScreen();
         loginScreen.enterEmail("tester@automation.com").enterPassword("Test1234!").clickRememberCheckBox().clickLoginButton();
+        Assert.assertTrue(loginScreen.verifySuccessAccess(), "Success message is not displayed");
     }
 }

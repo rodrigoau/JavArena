@@ -12,8 +12,8 @@ public class LoginScreen extends BaseMobilePage {
     private final By emailInputLocator = AppiumBy.xpath("//android.widget.EditText[@resource-id='login_email_input']");
     private final By passwordInputLocator = AppiumBy.xpath("//android.widget.EditText[@resource-id='login_password_input']");
     private final By rememberMeCheckBoxLocator = AppiumBy.xpath("//android.widget.CheckBox[@content-desc='Remember me']");
-    private final By LoginInButtonLocator = AppiumBy.xpath("//android.widget.Button[@content-desc='Log in']");
-
+    private final By loginInButtonLocator = AppiumBy.xpath("//android.widget.Button[@content-desc='Log in']");
+    private final By welcomeStandardMessageLocator = AppiumBy.xpath("//android.view.View[@content-desc='Welcome, Standard Tester!']");
     public LoginScreen enterEmail(String email) {
         driver.findElement(emailInputLocator).click();
         driver.findElement(emailInputLocator).sendKeys(email);
@@ -29,7 +29,10 @@ public class LoginScreen extends BaseMobilePage {
         return this;
     }
     public LoginScreen clickLoginButton() {
-        driver.findElement(LoginInButtonLocator).click();
+        driver.findElement(loginInButtonLocator).click();
         return this;
+    }
+    public boolean verifySuccessAccess(){
+        return driver.findElement(welcomeStandardMessageLocator).isDisplayed();
     }
 }
