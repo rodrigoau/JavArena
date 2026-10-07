@@ -1,0 +1,14 @@
+{
+  "mobile": {
+    "validUser": {
+      "username": "tester@automation.com",
+      "password": "Test1234!",
+      "successMessage": "Welcome,"
+    },
+    "invalidUser": {
+      "username": "hacker",
+      "password": "123",
+      "errorMessage": "Invalid credentials"
+    }
+  }
+}
