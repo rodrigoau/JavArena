@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="JavArena Mobile Automation Suite" parallel="false">
+
+    <test name="Android Tests - Emulador">
+        <!-- Parámetros que leerá tu BaseMobileTest -->
+        <parameter name="platformName" value="Android"/>
+        <parameter name="deviceName" value="Pixel_10"/>
+        <parameter name="appPath" value="C:/Users/rodri/Downloads/automate_the_internet_mobile.apk"/> <!-- Pon la ruta a tu .apk si es necesario -->
+
+        <classes>
+            <!-- Agrega aquí todas tus clases de prueba móvil -->
+            <class name="com.rodrigo.tests.mobile.HomeScreenTest"/>
+        </classes>
+    </test>
+
+</suite>
