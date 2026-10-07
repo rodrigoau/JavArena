@@ -9,11 +9,11 @@ public class HomeScreen extends BaseMobilePage {
         super();
     }
 
-    private final By loginAndSignUpOption = AppiumBy.id("home_card_auth");
+    private final By authCardLocator = AppiumBy.xpath("//android.widget.Button[@resource-id='home_card_auth']");
 
     public void clickOnLoginAndSignUpOption(){
-        driver.wa
-        driver.findElement(loginAndSignUpOption).click();
+        waitForElementVisible(authCardLocator);
+        driver.findElement(authCardLocator).click();
     }
 
 

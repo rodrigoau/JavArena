@@ -24,6 +24,8 @@ public class MobileDriverFactory {
                     options.setDeviceName(deviceName);
                     options.setPlatformName(platformName);
                     options.setAutomationName("UiAutomator2");
+                    options.setAppWaitDuration(Duration.ofSeconds(30));
+                    options.setAppWaitActivity("*");
                     if (appPath != null && !appPath.isEmpty()) {
                         options.setApp(appPath);
                     } else {
