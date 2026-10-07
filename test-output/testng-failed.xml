@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [JavArena Mobile Automation Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Android Tests - Emulador(failed)">
+    <parameter name="platformName" value="Android"/>
+    <parameter name="deviceName" value="Pixel_10"/>
+    <parameter name="appPath" value="C:/Users/rodri/Downloads/automate_the_internet_mobile.apk"/>
+    <classes>
+      <class name="com.rodrigo.tests.mobile.LoginScreenTest">
+        <methods>
+          <include name="setUp"/>
+          <include name="loginUsingExistingCredentialsJsonFile"/>
+          <include name="tearDown"/>
+          <include name="loginUsingExistingCredentialsPropertiesFile"/>
+        </methods>
+      </class> <!-- com.rodrigo.tests.mobile.LoginScreenTest -->
+    </classes>
+  </test> <!-- Android Tests - Emulador(failed) -->
+</suite> <!-- Failed suite [JavArena Mobile Automation Suite] -->

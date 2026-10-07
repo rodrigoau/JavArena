@@ -4,7 +4,7 @@ import com.rodrigo.automation.mobile.MobileDriverFactory;
 import org.testng.annotations.*;
 
 public class BaseMobileTest {
-    @BeforeClass
+    @BeforeMethod
     @Parameters({"platformName", "deviceName", "appPath"})
     public void setUp(@Optional("Android") String platformName,
                       @Optional("AndroidEmulator") String deviceName,
@@ -12,7 +12,7 @@ public class BaseMobileTest {
         MobileDriverFactory.initMobileDriver(platformName, deviceName, appPath);
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDown(){
         MobileDriverFactory.quitDriver();
     }

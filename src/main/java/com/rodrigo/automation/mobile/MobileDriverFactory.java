@@ -19,32 +19,29 @@ public class MobileDriverFactory {
             try {
                 AppiumDriver driver;
                 URL serverUrl = URI.create("http://127.0.0.1:4723").toURL();
-                if (platformName.equals("Android")){
+                if (platformName.equalsIgnoreCase("Android")) {
                     UiAutomator2Options options = new UiAutomator2Options();
                     options.setDeviceName(deviceName);
-                    options.setPlatformName(platformName);
+                    options.setPlatformName("Android");
                     options.setAutomationName("UiAutomator2");
                     options.setAppWaitDuration(Duration.ofSeconds(30));
                     options.setAppWaitActivity("*");
                     if (appPath != null && !appPath.isEmpty()) {
                         options.setApp(appPath);
-                    } else {
-
                     }
                     driver = new AndroidDriver(serverUrl, options);
                 } else {
                     throw new IllegalArgumentException("Plataforma móvil no soportada: " + platformName);
                 }
-
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
                 mobileDriverThreadLocal.set(driver);
-
             } catch (MalformedURLException e) {
-                throw new RuntimeException("La URL del servidor de Appium es inválida: " + e.getMessage());
+                throw new RuntimeException("La URL del servidor es inválida: " + e.getMessage());
+            } catch (Exception e) {
+                throw new RuntimeException("Fallo al crear la sesión de Appium. ¿Está corriendo el servidor en el puerto 4723? Detalles: " + e.getMessage());
             }
         }
     }
-
     public static AppiumDriver getDriver() {
         return mobileDriverThreadLocal.get();
     }

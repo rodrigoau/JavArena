@@ -9,16 +9,12 @@ import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
 public class LoginScreenTest extends BaseMobileTest {
 
     @Test
     @Story("Successful login with valid credentials")
     @Description("Verify that the login and signup button is displayed and clickable")
     public void clickOnLoginAndSignUpOption(){
-        HomeScreen homeScreen = new HomeScreen();
-        homeScreen.clickOnLoginAndSignUpOption();
     }
 
     @Test
@@ -28,6 +24,8 @@ public class LoginScreenTest extends BaseMobileTest {
         String user = ConfigReader.getProperty("mobile.valid.username");
         String pass = ConfigReader.getProperty("mobile.valid.password");
         LoginScreen loginScreen = new LoginScreen();
+        HomeScreen homeScreen = new HomeScreen();
+        homeScreen.clickOnLoginAndSignUpOption();
         loginScreen.enterEmail(user).enterPassword(pass).clickRememberCheckBox().clickLoginButton();
         Assert.assertTrue(loginScreen.verifySuccessAccess(), "Success message is not displayed");
     }
@@ -39,6 +37,8 @@ public class LoginScreenTest extends BaseMobileTest {
         String user = JsonReader.getString("/mobile/validUser/username");
         String pass = JsonReader.getString("/mobile/validUser/password");
         LoginScreen loginScreen = new LoginScreen();
+        HomeScreen homeScreen = new HomeScreen();
+        homeScreen.clickOnLoginAndSignUpOption();
         loginScreen.enterEmail(user).enterPassword(pass).clickRememberCheckBox().clickLoginButton();
         Assert.assertTrue(loginScreen.verifySuccessAccess(), "Success message is not displayed");
     }
