@@ -10,7 +10,7 @@
 
         <classes>
             <!-- Agrega aquí todas tus clases de prueba móvil -->
-            <class name="com.rodrigo.tests.mobile.HomeScreenTest"/>
+            <class name="com.rodrigo.tests.mobile.LoginScreenTest"/>
         </classes>
     </test>
 
