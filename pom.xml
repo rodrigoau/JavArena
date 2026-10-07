@@ -81,6 +81,13 @@
             <version>7.10.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Allure TestNG Adapter -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.29.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -105,6 +112,16 @@
                         <!-- Aquí podrás apuntar a tus archivos XML de TestNG cuando los crees -->
                         <!-- <suiteXmlFile>src/test/resources/suites/testng.xml</suiteXmlFile> -->
                     </suiteXmlFiles>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin de Maven para Allure -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.15.2</version>
+                <configuration>
+                    <reportVersion>2.29.0</reportVersion>
                 </configuration>
             </plugin>
         </plugins>
