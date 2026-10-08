@@ -52,6 +52,16 @@ public class JavaCollections {
 
         System.out.println("Los estudiantes son: " + students);
 
+
+        // From Array to List
+        String[] studentNames = {"ana", "jack", "scott"};
+        List<String> studentsNames = List.of(studentNames);
+
+        for(String student : studentsNames){
+            System.out.println("De array a list: " + student);
+        }
+
+
     }
 
 }

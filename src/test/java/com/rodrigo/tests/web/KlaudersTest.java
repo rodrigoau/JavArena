@@ -41,3 +41,11 @@ public class KlaudersTest extends BaseTest {
                 .clickThirdButton();
     }
 }
+
+
+class login2Page {
+
+    public void verifyLoginPage(){
+
+    }
+}
