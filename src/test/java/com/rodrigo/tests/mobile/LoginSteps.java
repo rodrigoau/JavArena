@@ -13,7 +13,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
 
-public class LoginSteps { // <-- Ya no extiende de BaseMobileTest
+public class LoginSteps {
 
     private LoginScreen loginScreen;
     private HomeScreen homeScreen;
@@ -26,14 +26,6 @@ public class LoginSteps { // <-- Ya no extiende de BaseMobileTest
     @Given("I open the mobile application")
     public void iOpenTheMobileApplication() {
         Assert.assertNotNull(MobileDriverFactory.getDriver(), "El driver no se inicializó correctamente");
-    }
-
-    @When("I enter my valid username and password from config")
-    public void iEnterMyValidUsernameAndPasswordFromConfig() {
-        String user = ConfigReader.getProperty("mobile.valid.username");
-        String pass = ConfigReader.getProperty("mobile.valid.password");
-        loginScreen = new LoginScreen();
-        loginScreen.enterEmail(user).enterPassword(pass).clickRememberCheckBox();
     }
 
     @When("I enter my credentials from the JSON file and submit them")
