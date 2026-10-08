@@ -13,10 +13,15 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
 
-public class LoginSteps extends BaseMobileTest {
+public class LoginSteps { // <-- Ya no extiende de BaseMobileTest
 
     private LoginScreen loginScreen;
     private HomeScreen homeScreen;
+
+    @Before
+    public void setUp() {
+        MobileDriverFactory.initMobileDriver("Android", "Pixel_10", "C:/Users/rodri/Downloads/automate_the_internet_mobile.apk");
+    }
 
     @Given("I open the mobile application")
     public void iOpenTheMobileApplication() {
