@@ -1,0 +1,10 @@
+{
+  "data" : [ {
+    "sku" : "KL-001",
+    "name" : "Selenium Grid Hours (10h)",
+    "category" : "Infrastructure",
+    "price" : 49.0,
+    "stock" : 25
+  } ],
+  "requestId" : "req_3f9a1c2b7d4e"
+}

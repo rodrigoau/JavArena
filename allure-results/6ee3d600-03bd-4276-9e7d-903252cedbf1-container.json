@@ -1,0 +1,1 @@
+{"uuid":"6ee3d600-03bd-4276-9e7d-903252cedbf1","name":"com.rodrigo.tests.api.TemplateApiTest","children":["1356491b-5c33-4300-85d2-2d04acec01d6"],"befores":[{"name":"setUpApi","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1791416511842,"stop":1791416512255}],"afters":[],"start":1791416511812,"stop":1791416513914}

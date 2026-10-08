@@ -12,12 +12,6 @@ import org.testng.annotations.Test;
 public class LoginScreenTest extends BaseMobileTest {
 
     @Test
-    @Story("Successful login with valid credentials")
-    @Description("Verify that the login and signup button is displayed and clickable")
-    public void clickOnLoginAndSignUpOption(){
-    }
-
-    @Test
     @Story("Successful login with valid credentials (Properties File)")
     @Description("Verifies that a user can enter their credentials, press the login button, and see the welcome screen in the app.")
     public void loginUsingExistingCredentialsPropertiesFile() {

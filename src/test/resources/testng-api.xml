@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="JavArena API Automation Suite" parallel="false">
+
+    <test name="API Tests - Fixtures Dynamic Suite">
+        <classes>
+            <!-- Apuntamos a la clase actualizada que contiene el DataProvider de fixtures -->
+            <class name="com.rodrigo.tests.api.TemplateApiTest"/>
+        </classes>
+    </test>
+
+</suite>
