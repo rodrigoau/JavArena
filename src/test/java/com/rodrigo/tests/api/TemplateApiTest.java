@@ -11,6 +11,8 @@ import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import org.testng.ITest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -32,10 +34,12 @@ import static io.restassured.RestAssured.given;
  *
  * Estructura de cada fixture:
  * {
+ *   "testName": "Usuarios",               // opcional, nombre por defecto de los casos del archivo
  *   "endpoint": "/ruta",                  // default para todos los casos del archivo
  *   "method": "GET",                      // opcional, default GET
  *   "headers": { ... },                   // opcional, default para todos los casos
  *   "nombreDelCaso": {
+ *     "testName": "...",                  // opcional, nombre del resultado (default: "archivo.json -> nombreDelCaso")
  *     "description": "...",               // opcional
  *     "endpoint": "/otra-ruta",           // opcional, sobreescribe el del archivo
  *     "method": "POST",                   // opcional, sobreescribe el del archivo
@@ -54,11 +58,24 @@ import static io.restassured.RestAssured.given;
  */
 @Epic("Módulo API REST")
 @Feature("Ejecución Dinámica desde Fixtures JSON")
-public class TemplateApiTest extends BaseApiTest {
+public class TemplateApiTest extends BaseApiTest implements ITest {
 
     private static final String FIXTURES_PATH = "src/test/java/com/rodrigo/tests/api/fixtures";
-    private static final Set<String> FILE_LEVEL_KEYS = Set.of("endpoint", "method", "headers");
+    private static final Set<String> FILE_LEVEL_KEYS = Set.of("testName", "endpoint", "method", "headers");
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private final ThreadLocal<String> testName = new ThreadLocal<>();
+
+    // Nombre que muestran TestNG / el IDE en el resultado: el testName del caso actual
+    @BeforeMethod(alwaysRun = true)
+    public void setTestName(Object[] params) {
+        testName.set(params.length > 0 ? String.valueOf(params[0]) : null);
+    }
+
+    @Override
+    public String getTestName() {
+        return testName.get();
+    }
 
     // Cada caso de cada archivo .json en fixtures es una ejecución independiente del test
     @DataProvider(name = "fixtureCasesProvider")
@@ -76,7 +93,9 @@ public class TemplateApiTest extends BaseApiTest {
                 if (FILE_LEVEL_KEYS.contains(entry.getKey()) || !entry.getValue().has("expectedResults")) {
                     continue;
                 }
-                testCases.add(new Object[]{file.getName(), entry.getKey(), fixture, entry.getValue()});
+                String testName = textOrDefault(entry.getValue(), "testName",
+                        textOrDefault(fixture, "testName", file.getName() + " -> " + entry.getKey()));
+                testCases.add(new Object[]{testName, fixture, entry.getValue()});
             }
         }
 
@@ -86,8 +105,7 @@ public class TemplateApiTest extends BaseApiTest {
     @Test(dataProvider = "fixtureCasesProvider")
     @Story("Pruebas automatizadas basadas en archivos de fixtures")
     @Description("Ejecuta peticiones HTTP dinámicas leyendo cada caso de los archivos JSON en la carpeta fixtures y compara el response con expectedResults.")
-    public void testDynamicApiFromFixture(String fileName, String caseName, JsonNode fixture, JsonNode testCase) {
-        String testId = fileName + " -> " + caseName;
+    public void testDynamicApiFromFixture(String testId, JsonNode fixture, JsonNode testCase) {
         Allure.getLifecycle().updateTestCase(result -> result.setName(testId));
         System.out.println("Ejecutando caso: " + testId);
 

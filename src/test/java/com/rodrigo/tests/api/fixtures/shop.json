@@ -1,13 +1,60 @@
 {
   "endpoint": "/automate-the-internet",
-  "getPaginatedUsers": {
+  "getPaginatedProducts": {
+    "testName": "Shop - listado de productos",
     "description": "Verifica que el response completo coincida con el contrato esperado",
-    "ignoreFields": ["requestId"],
+    "ignoreFields": [
+      "requestId"
+    ],
     "queryParams": {
       "api": "products"
     },
     "expectedResults": {
-      "data":[{"sku":"KL-001","name":"Selenium Grid Hours (10h)","category":"Infrastructure","price":49,"stock":25},{"sku":"KL-002","name":"Playwright Workshop","category":"Training","price":299,"stock":8},{"sku":"KL-003","name":"Cypress Starter Kit","category":"Templates","price":79,"stock":14},{"sku":"KL-004","name":"API Contract Test Pack","category":"Templates","price":129,"stock":5},{"sku":"KL-005","name":"Visual Regression Add-on","category":"Infrastructure","price":89,"stock":0},{"sku":"KL-006","name":"QA Audit (1 day)","category":"Consulting","price":650,"stock":3}],"requestId":"req_84b450570652"
+      "data": [
+        {
+          "sku": "KL-001",
+          "name": "Selenium Grid Hours (10h)",
+          "category": "Infrastructure",
+          "price": 49,
+          "stock": 25
+        },
+        {
+          "sku": "KL-002",
+          "name": "Playwright Workshop",
+          "category": "Training",
+          "price": 299,
+          "stock": 8
+        },
+        {
+          "sku": "KL-003",
+          "name": "Cypress Starter Kit",
+          "category": "Templates",
+          "price": 79,
+          "stock": 14
+        },
+        {
+          "sku": "KL-004",
+          "name": "API Contract Test Pack",
+          "category": "Templates",
+          "price": 129,
+          "stock": 5
+        },
+        {
+          "sku": "KL-005",
+          "name": "Visual Regression Add-on",
+          "category": "Infrastructure",
+          "price": 89,
+          "stock": 0
+        },
+        {
+          "sku": "KL-006",
+          "name": "QA Audit (1 day)",
+          "category": "Consulting",
+          "price": 650,
+          "stock": 3
+        }
+      ],
+      "requestId": "req_84b450570652"
     }
   }
 }
