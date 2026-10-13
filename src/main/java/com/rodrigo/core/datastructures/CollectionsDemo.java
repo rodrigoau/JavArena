@@ -49,6 +49,7 @@ public class CollectionsDemo {
     }
 
 
+    /** ArrayList: acceso rápido por índice. Ideal cuando lees más de lo que insertas/borras al inicio. */
     static void arrayListDemo(){
         List<String> playlist = new ArrayList<>();
         playlist.add("Bohemian Rhapsody");
@@ -61,6 +62,7 @@ public class CollectionsDemo {
         System.out.println(playlist.size());
     }
 
+    /** LinkedList: insertar/quitar en los extremos es O(1). También funciona como cola (Queue). */
     static void linkedListDemo(){
         LinkedList<String> colaImpresion = new LinkedList<>();
         colaImpresion.add("factura.pdf");
@@ -72,6 +74,7 @@ public class CollectionsDemo {
         System.out.println("Pendientes... " + colaImpresion);
     }
 
+    /** HashSet: unicidad con búsqueda O(1). No garantiza ningún orden. */
     static void hashSetDemo(){
         Set<String> emails = new HashSet<>();
         System.out.println("Registrando emails:");
@@ -82,6 +85,7 @@ public class CollectionsDemo {
         System.out.println(" Emails (Orden no garantizado): " + emails);
     }
 
+    /** LinkedHashSet: únicos + conserva el orden en que se insertaron. */
     static void linkedHashSetDemo(){
         Set<String> tags = new LinkedHashSet<>();
         tags.add("playa");
@@ -92,6 +96,7 @@ public class CollectionsDemo {
         System.out.println(" Tags en orden de captura " + tags);
     }
 
+    /** TreeSet: únicos + siempre ordenados (orden natural o Comparator). */
     static void treeSetDemo(){
         Set<String> asistencia = new TreeSet<>();
         asistencia.add("Zamora");
@@ -108,6 +113,26 @@ public class CollectionsDemo {
         System.out.println(" Calificaciones únicas (desc): " + calificaciones);
         System.out.println(" Mejor calificacion: " + calificaciones.first());
 
+    }
+
+    // ------------------------------------------------------------------
+    // MAP: parejas clave -> valor, claves únicas
+    // ------------------------------------------------------------------
+
+    /** HashMap: buscar un valor por su clave en O(1). Sin orden. */
+    static void hashMapDemo(){
+        Map<String, String> sesiones = new HashMap<>();
+        sesiones.put("tok-123", "rodrigo");
+        sesiones.put("tok-456", "ana");
+        sesiones.put("tok-789", "ana");
+
+        sesiones.put("tok-123", "rodrigo_v2");
+
+        System.out.println("Sesiones: " + sesiones);
+        System.out.println("usuario tok-789: " + sesiones.get("tok-789"));
+        System.out.println("usuario tok-000: " + sesiones.getOrDefault("tok-000", "ánonimo"));
+
+        System.out.println("Sesiones: " + sesiones);
     }
 
 }
