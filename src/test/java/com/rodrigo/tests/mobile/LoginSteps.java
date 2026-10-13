@@ -7,10 +7,12 @@ import com.rodrigo.automation.utils.ConfigReader;
 import com.rodrigo.automation.utils.JsonReader;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.OutputType;
 import org.testng.Assert;
 
 public class LoginSteps {
@@ -52,7 +54,11 @@ public class LoginSteps {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed() && MobileDriverFactory.getDriver() != null) {
+            byte[] screenshot = MobileDriverFactory.getDriver().getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Screenshot - " + scenario.getName());
+        }
         MobileDriverFactory.quitDriver();
     }
 }

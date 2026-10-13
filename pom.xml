@@ -145,6 +145,10 @@
                     <suiteXmlFiles>
                         <!-- <suiteXmlFile>src/test/resources/suites/testng-mobile.xml</suiteXmlFile> -->
                     </suiteXmlFiles>
+                    <!-- Allure (TestNG y Cucumber) escribe en allure-results de la raíz; allure-maven lee de ahí -->
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
 
@@ -155,6 +159,7 @@
                 <version>2.15.2</version>
                 <configuration>
                     <reportVersion>2.29.0</reportVersion>
+                    <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>
                 </configuration>
             </plugin>
         </plugins>
