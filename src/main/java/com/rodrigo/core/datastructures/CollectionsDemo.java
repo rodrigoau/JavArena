@@ -45,7 +45,8 @@ import java.util.*;
 
 public class CollectionsDemo {
     public static void main(String[] args) {
-        treeSetDemo();
+        imprimir(1);
+        imprimir("hola");
     }
 
 
@@ -134,5 +135,49 @@ public class CollectionsDemo {
 
         System.out.println("Sesiones: " + sesiones);
     }
+
+    /** LinkedHashMap: conserva orden de inserción, o de acceso (útil para una caché LRU). */
+    static void linkedHashMapDemo(){
+        final int CAPACIDAD = 3;
+        Map<String, String> cacheLRU = new LinkedHashMap<>(16, 0.75f, true){
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<String, String> eldest){
+                return size() > CAPACIDAD;
+            }
+        };
+
+        cacheLRU.put("/home", "<html>home</html>");
+        cacheLRU.put("/hoteles", "<html>hoteles</html>");
+        cacheLRU.put("/yates", "<html>yates</html>");
+        cacheLRU.get("/home");
+
+        cacheLRU.put("/contacto", "<html>contacto</html>");
+        System.out.println("Cache LRU (de menos a mas reciente): " + cacheLRU.keySet());
+    }
+
+    /** TreeMap: claves siempre ordenadas + búsquedas por rango. */
+    static void treeMapDemo() {
+        TreeMap<String, String> diccionario = new TreeMap<>();
+        diccionario.put("velero", "Embarcación impulsada por el viento");
+        diccionario.put("ancla", "Pieza para fijar una embarcación al fondo");
+        diccionario.put("muelle", "Construcción para atracar barcos");
+        diccionario.put("catamarán", "Embarcación de dos cascos");
+
+        System.out.println("\n[TreeMap] Diccionario ordenado:");
+        diccionario.forEach((palabra, def) -> System.out.println("  " + palabra + " -> " + def));
+
+        System.out.println("  Primera palabra: " + diccionario.firstKey());
+        System.out.println("  Palabras de 'c' a 'n': " + diccionario.subMap("c", "n").keySet());
+    }
+
+    static void workshop(){
+    }
+
+
+    static <T> T imprimir(T value){
+        System.out.println(value);
+        return value;
+    }
+
 
 }
