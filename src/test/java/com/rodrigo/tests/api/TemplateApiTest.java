@@ -30,34 +30,34 @@ import java.util.Set;
 import static io.restassured.RestAssured.given;
 
 /**
- * Ejecuta todos los casos definidos en los JSON de la carpeta fixtures.
+ * Runs every test case defined in the JSON files of the fixtures folder.
  *
- * Estructura de cada fixture:
+ * Structure of each fixture:
  * {
- *   "testName": "Usuarios",               // opcional, nombre por defecto de los casos del archivo
- *   "endpoint": "/ruta",                  // default para todos los casos del archivo
- *   "method": "GET",                      // opcional, default GET
- *   "headers": { ... },                   // opcional, default para todos los casos
- *   "nombreDelCaso": {
- *     "testName": "...",                  // opcional, nombre del resultado (default: "archivo.json -> nombreDelCaso")
- *     "description": "...",               // opcional
- *     "endpoint": "/otra-ruta",           // opcional, sobreescribe el del archivo
- *     "method": "POST",                   // opcional, sobreescribe el del archivo
- *     "pathParams":  { ... },             // opcional
- *     "queryParams": { ... },             // opcional
- *     "headers":     { ... },             // opcional, se mezcla con los del archivo
- *     "body":        { ... },             // opcional, request body
- *     "expectedStatus": 200,              // opcional, default 200
- *     "ignoreFields": ["requestId"],      // opcional, rutas (con puntos) que no se comparan
- *     "expectedResults": { ... }          // JSON esperado del response
+ *   "testName": "Users",                  // optional, default name for the cases in the file
+ *   "endpoint": "/path",                  // default for every case in the file
+ *   "method": "GET",                      // optional, default GET
+ *   "headers": { ... },                   // optional, default for every case
+ *   "caseName": {
+ *     "testName": "...",                  // optional, result name (default: "file.json -> caseName")
+ *     "description": "...",               // optional
+ *     "endpoint": "/other-path",          // optional, overrides the file-level value
+ *     "method": "POST",                   // optional, overrides the file-level value
+ *     "pathParams":  { ... },             // optional
+ *     "queryParams": { ... },             // optional
+ *     "headers":     { ... },             // optional, merged with the file-level headers
+ *     "body":        { ... },             // optional, request body
+ *     "expectedStatus": 200,              // optional, default 200
+ *     "ignoreFields": ["requestId"],      // optional, dot-notation paths that are not compared
+ *     "expectedResults": { ... }          // expected JSON response
  *   }
  * }
  *
- * La comparación valida que cada campo declarado en expectedResults exista y coincida en el
- * response real; los arrays deben tener el mismo tamaño y se comparan elemento por elemento.
+ * The comparison checks that every field declared in expectedResults exists and matches in the
+ * actual response; arrays must have the same size and are compared element by element.
  */
-@Epic("Módulo API REST")
-@Feature("Ejecución Dinámica desde Fixtures JSON")
+@Epic("REST API Module")
+@Feature("Dynamic Execution from JSON Fixtures")
 public class TemplateApiTest extends BaseApiTest implements ITest {
 
     private static final String FIXTURES_PATH = "src/test/java/com/rodrigo/tests/api/fixtures";
@@ -66,7 +66,7 @@ public class TemplateApiTest extends BaseApiTest implements ITest {
 
     private final ThreadLocal<String> testName = new ThreadLocal<>();
 
-    // Nombre que muestran TestNG / el IDE en el resultado: el testName del caso actual
+    // Name shown by TestNG / the IDE in the result: the testName of the current case
     @BeforeMethod(alwaysRun = true)
     public void setTestName(Object[] params) {
         testName.set(params.length > 0 ? String.valueOf(params[0]) : null);
@@ -77,13 +77,13 @@ public class TemplateApiTest extends BaseApiTest implements ITest {
         return testName.get();
     }
 
-    // Cada caso de cada archivo .json en fixtures es una ejecución independiente del test
+    // Each case in each .json file in fixtures is an independent test execution
     @DataProvider(name = "fixtureCasesProvider")
     public Iterator<Object[]> provideFixtureCases() throws IOException {
         List<Object[]> testCases = new ArrayList<>();
 
         File[] files = new File(FIXTURES_PATH).listFiles((dir, name) -> name.toLowerCase().endsWith(".json"));
-        Assert.assertNotNull(files, "No se encontró la carpeta de fixtures: " + new File(FIXTURES_PATH).getAbsolutePath());
+        Assert.assertNotNull(files, "Fixtures folder not found: " + new File(FIXTURES_PATH).getAbsolutePath());
         Arrays.sort(files, Comparator.comparing(File::getName));
 
         for (File file : files) {
@@ -103,15 +103,15 @@ public class TemplateApiTest extends BaseApiTest implements ITest {
     }
 
     @Test(dataProvider = "fixtureCasesProvider")
-    @Story("Pruebas automatizadas basadas en archivos de fixtures")
-    @Description("Ejecuta peticiones HTTP dinámicas leyendo cada caso de los archivos JSON en la carpeta fixtures y compara el response con expectedResults.")
+    @Story("Automated tests based on fixture files")
+    @Description("Sends dynamic HTTP requests by reading each case from the JSON files in the fixtures folder and compares the response against expectedResults.")
     public void testDynamicApiFromFixture(String testId, JsonNode fixture, JsonNode testCase) {
         Allure.getLifecycle().updateTestCase(result -> result.setName(testId));
-        System.out.println("Ejecutando caso: " + testId);
+        System.out.println("Running test case: " + testId);
 
-        // 1. Construir el request a partir del fixture (el caso sobreescribe los valores del archivo)
+        // 1. Build the request from the fixture (the case overrides the file-level values)
         String endpoint = textOrDefault(testCase, "endpoint", textOrDefault(fixture, "endpoint", null));
-        Assert.assertNotNull(endpoint, "El caso " + testId + " no define 'endpoint'");
+        Assert.assertNotNull(endpoint, "Test case " + testId + " does not define 'endpoint'");
         String method = textOrDefault(testCase, "method", textOrDefault(fixture, "method", "GET")).toUpperCase();
         int expectedStatus = testCase.path("expectedStatus").asInt(200);
 
@@ -128,19 +128,19 @@ public class TemplateApiTest extends BaseApiTest implements ITest {
             request.body(testCase.get("body").toString());
         }
 
-        // 2. Ejecutar la petición HTTP
+        // 2. Send the HTTP request
         Response response = request.when().request(method, endpoint);
 
-        // 3. Validar status code
+        // 3. Validate status code
         Assert.assertEquals(response.getStatusCode(), expectedStatus,
-                "Fallo en " + testId + ": código de estado HTTP inesperado");
+                "Failure in " + testId + ": unexpected HTTP status code");
 
-        // 4. Comparar el response contra expectedResults
+        // 4. Compare the response against expectedResults
         JsonNode actual;
         try {
             actual = MAPPER.readTree(response.getBody().asString());
         } catch (IOException e) {
-            Assert.fail("Error al parsear la respuesta JSON en " + testId + ": " + e.getMessage());
+            Assert.fail("Error parsing JSON response in " + testId + ": " + e.getMessage());
             return;
         }
 
@@ -153,52 +153,52 @@ public class TemplateApiTest extends BaseApiTest implements ITest {
 
         if (!differences.isEmpty()) {
             String report = String.join("\n", differences);
-            System.out.println("--- DIFERENCIAS EN " + testId + " ---\n" + report);
-            Allure.addAttachment("Diferencias", report);
-            Allure.addAttachment("Esperado", "application/json", expected.toPrettyString());
-            Allure.addAttachment("Recibido", "application/json", actual.toPrettyString());
+            System.out.println("--- DIFFERENCES IN " + testId + " ---\n" + report);
+            Allure.addAttachment("Differences", report);
+            Allure.addAttachment("Expected", "application/json", expected.toPrettyString());
+            Allure.addAttachment("Actual", "application/json", actual.toPrettyString());
         }
 
         Assert.assertTrue(differences.isEmpty(),
-                "El response no coincide con expectedResults en " + testId + ":\n" + String.join("\n", differences));
+                "Response does not match expectedResults in " + testId + ":\n" + String.join("\n", differences));
     }
 
     /**
-     * Compara recursivamente: cada campo de 'expected' debe existir y coincidir en 'actual'.
-     * Las rutas se reportan como $.data[0].name; ignoreFields usa la misma ruta sin "$." ni índices (data.name).
+     * Recursive comparison: every field in 'expected' must exist and match in 'actual'.
+     * Paths are reported as $.data[0].name; ignoreFields uses the same path without "$." or indexes (data.name).
      */
     private void compare(String path, JsonNode expected, JsonNode actual, Set<String> ignoreFields, List<String> differences) {
         if (ignoreFields.contains(normalize(path))) {
             return;
         }
         if (actual == null || actual.isMissingNode()) {
-            differences.add(path + ": falta en el response (esperado " + expected + ")");
+            differences.add(path + ": missing in response (expected " + expected + ")");
             return;
         }
         if (expected.isObject()) {
             if (!actual.isObject()) {
-                differences.add(path + ": se esperaba un objeto, se recibió " + actual);
+                differences.add(path + ": expected an object, received " + actual);
                 return;
             }
             expected.fields().forEachRemaining(e ->
                     compare(path + "." + e.getKey(), e.getValue(), actual.get(e.getKey()), ignoreFields, differences));
         } else if (expected.isArray()) {
             if (!actual.isArray()) {
-                differences.add(path + ": se esperaba un array, se recibió " + actual);
+                differences.add(path + ": expected an array, received " + actual);
                 return;
             }
             if (expected.size() != actual.size()) {
-                differences.add(path + ": tamaño esperado " + expected.size() + ", recibido " + actual.size());
+                differences.add(path + ": expected size " + expected.size() + ", received " + actual.size());
             }
             for (int i = 0; i < Math.min(expected.size(), actual.size()); i++) {
                 compare(path + "[" + i + "]", expected.get(i), actual.get(i), ignoreFields, differences);
             }
         } else if (expected.isNumber() && actual.isNumber()) {
             if (expected.decimalValue().compareTo(actual.decimalValue()) != 0) {
-                differences.add(path + ": esperado " + expected + ", recibido " + actual);
+                differences.add(path + ": expected " + expected + ", received " + actual);
             }
         } else if (!expected.equals(actual)) {
-            differences.add(path + ": esperado " + expected + ", recibido " + actual);
+            differences.add(path + ": expected " + expected + ", received " + actual);
         }
     }
 
