@@ -47,6 +47,10 @@ public class CollectionsDemo {
     public static void main(String[] args) {
         imprimir(1);
         imprimir("hola");
+        String[] nr = { "a", "b" };
+        for (String n:nr){
+            imprimir(n);
+        }
     }
 
 
